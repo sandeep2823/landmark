@@ -1,0 +1,2 @@
+cd .\LandmarkAssignment
+mvn test
