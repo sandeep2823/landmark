@@ -1,11 +1,14 @@
 package stepDefinition;
 
 import java.util.List;
+import java.util.Set;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,6 +24,7 @@ import io.cucumber.java.en.When;
 public class LandingPage {
 	public static Logger logger = LogManager.getLogger(LandingPage.class);
 	WebDriver driver = null;
+	Actions act = null;
 
 	@Before
 	public void setup() {
@@ -35,7 +39,7 @@ public class LandingPage {
 
 	@After
 	public void teardown() {
-		driver.quit();
+//		driver.quit();
 	}
 
 	@Given("user is on landing page")
@@ -60,24 +64,50 @@ public class LandingPage {
 		driver.findElement(By.xpath("//input[@type='password']")).sendKeys("sandeeptest1");
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//div[contains(@class,'modalOpened')]//button[text()='Log In']")).click();
-		Thread.sleep(5000);
+		Thread.sleep(60000);
+	}
+	
+	@Given("user select {int} random cryptocurrency")
+	public void user_select_random_cryptocurrency(Integer int1) throws InterruptedException {
+		for(int i = 1; i<=int1;i++){
+			driver.findElement(By.xpath("//table[contains(@class,'table')]/tbody/tr["+i+"]/td/span")).click();
+			Thread.sleep(2000);
+			}
+	}
+	
+	@Given("user click on watchlist button and navigate to new tab")
+	public void user_click_on_watchlist_button_and_navigate_to_new_tab() throws InterruptedException {
+		act = new Actions(driver);
+		String clicklnk = Keys.chord(Keys.CONTROL,Keys.ENTER);
+		driver.findElement(By.xpath("//div[contains(@class,'table-link-area')]/div/a/button")).sendKeys(clicklnk);
+		Set<String> set = driver.getWindowHandles();
+		Iterator<String> it =set.iterator();
+		String parentID = it.next();
+		String childID = it.next();
+		Thread.sleep(2000);
+		driver.switchTo().window(childID);  
+	}
+	
+	@Given("user click on watchlist tab")
+	public void user_click_on_watchlist_tab() throws InterruptedException {
+		driver.findElement(By.xpath("//div[contains(@class,'table-link-area')]/div/a/button")).click();
+		Thread.sleep(2000);
 	}
 
-	@Given("I hover over on the {string} tab")
-	public void i_hover_over_on_the_tab(String tabs) throws InterruptedException {
-		Actions act = new Actions(driver);
+	@Given("user hover over on the {string} tab")
+	public void user_hover_over_on_the_tab(String tabs) throws InterruptedException {
+		act = new Actions(driver);
 		act.moveToElement(driver.findElement(By.linkText(tabs))).perform();
 		Thread.sleep(2000);
 	}
 
-	@When("I click on {string} option")
-	public void i_click_on_option(String ranking) {
-		// Write code here that turns the phrase above into concrete actions
+	@When("user click on {string} option")
+	public void user_click_on_option(String ranking) {
 		driver.findElement(By.linkText(ranking)).click();
 	}
 
-	@When("I record the data")
-	public void i_record_the_data() throws InterruptedException {
+	@When("user record the data")
+	public void user_record_the_data() throws InterruptedException {
 		// No.of Columns
 		Thread.sleep(2000);
 		List<WebElement> col = driver.findElements(By.xpath("//table[contains(@class,'table')]/thead/tr/th"));
@@ -90,20 +120,21 @@ public class LandingPage {
 		List<WebElement> names = driver
 				.findElements(By.xpath("//table[contains(@class,'table')]/tbody/tr/td[3]/div/a/div/div/p"));
 		Iterator<WebElement> iterator = names.iterator();
+		System.out.println("Names of currencies");
 		while (iterator.hasNext()) {
 			String name = iterator.next().getText();
 			System.out.println(name);
 		}
 	}
 
-	@When("I select filters button")
-	public void i_select_filters_button() throws InterruptedException {
+	@When("user select filters button")
+	public void user_select_filters_button() throws InterruptedException {
 		driver.findElement(By.xpath("//div[contains(@class,'table-control-area')]/div/button")).click();
 		Thread.sleep(2000);
 	}
 
-	@When("I select {string} filter from {string} dropdown")
-	public void i_select_filter_from_dropdown(String value, String dropdown) throws InterruptedException {
+	@When("user select {string} filter from {string} dropdown")
+	public void user_select_filter_from_dropdown(String value, String dropdown) throws InterruptedException {
 		driver.findElement(By.xpath("//li[@class='filter']/div/span/button[text()='" + dropdown + "']")).click();
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//li[text()='" + value + "']")).click();

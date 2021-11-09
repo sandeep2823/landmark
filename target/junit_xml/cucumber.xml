@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="3" time="68.869">
+<testcase classname="coinmarketcap frontend testing" name="Verify 100 results are displayed" time="13.138">
+<system-out><![CDATA[Given user is on landing page...............................................passed
+And user verify 100 results are displayed...................................passed
+]]></system-out>
+</testcase>
+<testcase classname="coinmarketcap frontend testing" name="Verify options selected are added to the watchlist" time="20.356">
+<system-out><![CDATA[Given user is on landing page...............................................passed
+And user login successfully.................................................passed
+]]></system-out>
+</testcase>
+<testcase classname="coinmarketcap frontend testing" name="Verify data based on filters" time="34.99">
+<system-out><![CDATA[Given user is on landing page...............................................passed
+And I hover over on the "Cryptocurrencies" tab..............................passed
+When I click on "Ranking" option............................................passed
+And I record the data.......................................................passed
+When I select filters button................................................passed
+And I select "Store of Value" filter from "Category" dropdown...............passed
+And I select "PoW" filter from "Algorithm" dropdown.........................passed
+And I select "Binance Chain" filter from "Platform" dropdown................passed
+Then I record the data......................................................passed
+]]></system-out>
+</testcase>
+</testsuite>

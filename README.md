@@ -10,5 +10,6 @@ Step Definition file - LandmarkAssignment\src\test\java\stepDefinition
 #Back End Task
 API key - 122708b5-5600-41fa-9068-991fabbb163b
 Java FIle Location - LandmarkAssignment\src\test\java\backend\Backend_test.java
-###To run - run as java file
+###To Run - click the backend.bat file present in project root location
+###or run as java file
 
