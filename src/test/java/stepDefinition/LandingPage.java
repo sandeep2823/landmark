@@ -2,7 +2,6 @@ package stepDefinition;
 
 import java.util.List;
 import java.util.Set;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.logging.log4j.LogManager;
@@ -39,7 +38,7 @@ public class LandingPage {
 
 	@After
 	public void teardown() {
-//		driver.quit();
+		driver.quit();
 	}
 
 	@Given("user is on landing page")
@@ -82,7 +81,7 @@ public class LandingPage {
 		driver.findElement(By.xpath("//div[contains(@class,'table-link-area')]/div/a/button")).sendKeys(clicklnk);
 		Set<String> set = driver.getWindowHandles();
 		Iterator<String> it =set.iterator();
-		String parentID = it.next();
+//		String parentID = it.next();
 		String childID = it.next();
 		Thread.sleep(2000);
 		driver.switchTo().window(childID);  
