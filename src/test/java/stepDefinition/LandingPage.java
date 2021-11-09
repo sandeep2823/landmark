@@ -3,7 +3,6 @@ package stepDefinition;
 import java.util.List;
 import java.util.Set;
 import java.util.Iterator;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -13,7 +12,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
-
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -63,30 +61,36 @@ public class LandingPage {
 		driver.findElement(By.xpath("//input[@type='password']")).sendKeys("sandeeptest1");
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//div[contains(@class,'modalOpened')]//button[text()='Log In']")).click();
-		Thread.sleep(60000);
+		if (driver.findElement(By.xpath("//div/iframe[@title='recaptcha challenge']")).isDisplayed()) {
+			Thread.sleep(60000);
+		} else {
+			Thread.sleep(2000);
+		}
 	}
-	
+
 	@Given("user select {int} random cryptocurrency")
 	public void user_select_random_cryptocurrency(Integer int1) throws InterruptedException {
-		for(int i = 1; i<=int1;i++){
-			driver.findElement(By.xpath("//table[contains(@class,'table')]/tbody/tr["+i+"]/td/span")).click();
+		for (int i = 1; i <= int1; i++) {
+			driver.findElement(By.xpath("//table[contains(@class,'table')]/tbody/tr[" + i + "]/td/span")).click();
 			Thread.sleep(2000);
-			}
+		}
 	}
-	
+
 	@Given("user click on watchlist button and navigate to new tab")
 	public void user_click_on_watchlist_button_and_navigate_to_new_tab() throws InterruptedException {
 		act = new Actions(driver);
-		String clicklnk = Keys.chord(Keys.CONTROL,Keys.ENTER);
+		String currentHandle = driver.getWindowHandle();
+		String clicklnk = Keys.chord(Keys.CONTROL, Keys.ENTER);
 		driver.findElement(By.xpath("//div[contains(@class,'table-link-area')]/div/a/button")).sendKeys(clicklnk);
-		Set<String> set = driver.getWindowHandles();
-		Iterator<String> it =set.iterator();
-//		String parentID = it.next();
-		String childID = it.next();
-		Thread.sleep(2000);
-		driver.switchTo().window(childID);  
+		Set<String> handles = driver.getWindowHandles();
+		for (String actual : handles) {
+			if (!actual.equalsIgnoreCase(currentHandle)) {
+				driver.switchTo().window(actual);
+			}
+			Thread.sleep(5000);
+		}
 	}
-	
+
 	@Given("user click on watchlist tab")
 	public void user_click_on_watchlist_tab() throws InterruptedException {
 		driver.findElement(By.xpath("//div[contains(@class,'table-link-area')]/div/a/button")).click();

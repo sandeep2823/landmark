@@ -13,3 +13,5 @@ Java FIle Location - LandmarkAssignment\src\test\java\backend\Backend_test.java
 ###To Run - click the backend.bat file present in project root location
 ###or run as java file
 
+#Reports
+HTML, JSON, XML reports are present in the target folder in the project root directory
